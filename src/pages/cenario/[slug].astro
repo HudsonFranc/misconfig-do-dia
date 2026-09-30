@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import { listarCenarios } from '../../lib/cenarios';
+import { marked } from 'marked';
+
+export async function getStaticPaths() {
+  const cenarios = listarCenarios();
+  return cenarios.map(c => ({
+    params: { slug: c.slug },
+    props: { cenario: c },
+  }));
+}
+
+const { cenario } = Astro.props;
+const html = marked.parse(cenario.conteudo);
+
+const todos = listarCenarios();
+const indiceAtual = todos.findIndex(c => c.slug === cenario.slug);
+const proximo = indiceAtual > 0 ? todos[indiceAtual - 1] : null;
+---
+
+<Base title={cenario.titulo}>
+  <p><a href="/">← Voltar</a></p>
+  <h2>{cenario.titulo}</h2>
+  <p>
+    <span class="servico">{cenario.servico}</span>
+    <span style="color: #64748b; margin-left: 1rem;">{cenario.data}</span>
+  </p>
+
+  <article set:html={html} />
+
+  {proximo && (
+    <div style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #334155;">
+      Próximo:{' '}
+      <a href={`/cenario/${proximo.slug}`}>
+        {proximo.titulo} →
+      </a>
+    </div>
+  )}
+</Base>

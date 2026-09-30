@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { listarCenarios } from '../lib/cenarios';
+import { formatarData } from '../lib/datas';
+
+const cenarios = listarCenarios();
+
+const porServico = cenarios.reduce((acc, c) => {
+  acc[c.servico] = (acc[c.servico] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+---
+
+<Base>
+  <p>{cenarios.length} cenários disponíveis.</p>
+
+  <div style="margin: 1rem 0;">
+    {Object.entries(porServico).map(([servico, qtd]) => (
+      <span class="servico" style="margin-right: .5rem;">
+        {servico} ({qtd})
+      </span>
+    ))}
+  </div>
+
+  <ul>
+    {cenarios.map(c => (
+      <li>
+        <a href={`/cenario/${c.slug}`}>{c.titulo}</a>
+        <span class="servico">{c.servico}</span>
+        <span style="color: #64748b; font-size: .85em; margin-left: .5rem;">
+          {formatarData(c.data)}
+        </span>
+      </li>
+    ))}
+  </ul>
+</Base>

@@ -1,0 +1,16 @@
+---
+name: Novo cenário
+about: Sugerir um novo cenário de misconfig
+title: "[Cenário] "
+labels: cenario
+---
+
+**Título do cenário:**
+
+**Serviço (S3, IAM, EC2, etc):**
+
+**Descrição curta:**
+
+**Por que é um problema:**
+
+**Comando para detectar:**

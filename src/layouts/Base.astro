@@ -1,0 +1,102 @@
+---
+const { title = "Misconfig do Dia" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Um cenário de má configuração em cloud por dia, em português." />
+  <title>{title}</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --fg: #e2e8f0;
+      --accent: #38bdf8;
+      --card: #1e293b;
+      --border: #334155;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { border-bottom: 2px solid var(--border); padding-bottom: .5rem; }
+    h2 { margin-top: 2rem; }
+    code {
+      background: var(--card);
+      padding: .1rem .4rem;
+      border-radius: 4px;
+      font-size: .9em;
+    }
+    pre {
+      background: var(--card);
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+    pre code { background: none; padding: 0; }
+    details {
+      background: var(--card);
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      margin: 1rem 0;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--accent);
+      user-select: none;
+    }
+    summary:hover { opacity: .8; }
+    .servico {
+      display: inline-block;
+      background: var(--card);
+      padding: .2rem .6rem;
+      border-radius: 4px;
+      font-size: .85em;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    ul { padding-left: 1.2rem; }
+    li { margin: .5rem 0; }
+    footer {
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      color: var(--muted);
+      font-size: .9em;
+    }
+  </style>
+</head> <meta property="og:title" content={title} />
+<meta property="og:description" content="Um cenário de segurança cloud por dia, para iniciantes." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<body>
+  <header>
+    <a href="/" style="text-decoration: none; color: inherit;">
+      <h1>🐛 Misconfig do Dia</h1>
+    </a>
+    <p>Um cenário de segurança cloud por dia, para iniciantes.</p>
+  </header>
+  <main>
+    <slot />
+  </main>
+  <footer>
+    <a href="https://github.com/HudsonFranc/misconfig-do-dia">Contribua no GitHub</a>
+  </footer>
+</body>
+</html>
