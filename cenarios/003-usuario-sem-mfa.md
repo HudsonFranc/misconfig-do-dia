@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9beaa25896fc227c7a6c2a848fd36e677a0fb99
 ---
 titulo: Usuário IAM sem MFA
 servico: IAM
