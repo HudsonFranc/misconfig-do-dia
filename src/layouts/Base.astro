@@ -87,7 +87,7 @@ const { title = "Misconfig do Dia" } = Astro.props;
 <meta name="twitter:card" content="summary" />
 <body>
   <header>
-    <a href="/" style="text-decoration: none; color: inherit;">
+    <a href={import.meta.env.BASE_URL + '/'} style="text-decoration: none; color: inherit;">
       <h1>🐛 Misconfig do Dia</h1>
     </a>
     <p>Um cenário de segurança cloud por dia, para iniciantes.</p>

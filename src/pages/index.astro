@@ -1,36 +1,31 @@
 ---
 import Base from '../layouts/Base.astro';
 import { listarCenarios } from '../lib/cenarios';
-import { formatarData } from '../lib/datas';
 
 const cenarios = listarCenarios();
-
-const porServico = cenarios.reduce((acc, c) => {
-  acc[c.servico] = (acc[c.servico] || 0) + 1;
-  return acc;
-}, {} as Record<string, number>);
 ---
 
-<Base>
-  <p>{cenarios.length} cenários disponíveis.</p>
+<Base title="Misconfig do Dia">
+  <h1>🐛 Misconfig do Dia</h1>
+  <p>Um cenário de segurança cloud por dia, para iniciantes.</p>
 
-  <div style="margin: 1rem 0;">
-    {Object.entries(porServico).map(([servico, qtd]) => (
-      <span class="servico" style="margin-right: .5rem;">
-        {servico} ({qtd})
-      </span>
-    ))}
-  </div>
+  <p><strong>{cenarios.length} cenários disponíveis.</strong></p>
 
   <ul>
-    {cenarios.map(c => (
+    {cenarios.map((c) => (
       <li>
-        <a href={`/cenario/${c.slug}`}>{c.titulo}</a>
-        <span class="servico">{c.servico}</span>
-        <span style="color: #64748b; font-size: .85em; margin-left: .5rem;">
-          {formatarData(c.data)}
-        </span>
+        <a href={`${import.meta.env.BASE_URL}/cenario/${c.slug}`}>
+          {c.titulo}
+        </a>
+        {' — '}
+        <small>{c.servico} · {c.data}</small>
       </li>
     ))}
   </ul>
+
+  <footer>
+    <a href="https://github.com/HudsonFranc/misconfig-do-dia">
+      Contribua no GitHub
+    </a>
+  </footer>
 </Base>

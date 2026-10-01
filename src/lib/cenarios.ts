@@ -21,7 +21,7 @@ export function listarCenarios(): Cenario[] {
   return arquivos.map(arquivo => {
     const conteudo = fs.readFileSync(path.join(CENARIOS_DIR, arquivo), 'utf-8');
 
-    const match = conteudo.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
+    const match = conteudo.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
     if (!match) {
       throw new Error(`Frontmatter inválido em ${arquivo}`);
     }
