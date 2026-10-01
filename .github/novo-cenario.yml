@@ -1,0 +1,100 @@
+name: Novo cenário
+description: Sugira um cenário de má configuração em cloud para o Misconfig do Dia
+title: "[Cenário] "
+labels: ["novo-cenario"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por sugerir um cenário! Você **não precisa saber a correção**: identificar a situação já ajuda.
+
+        Use apenas dados de exemplo (conta `111122223333`, bucket `exemplo-bucket`, domínio `example.com`). Não inclua dados reais de empresas ou pessoas, nem credenciais.
+
+  - type: dropdown
+    id: provedor
+    attributes:
+      label: Provedor
+      description: Os cenários atuais usam AWS. Para Azure ou GCP, descreva o que tem em mente no campo de situação.
+      options:
+        - AWS
+        - Azure
+        - GCP
+        - Outro
+    validations:
+      required: true
+
+  - type: input
+    id: servico
+    attributes:
+      label: Serviço
+      description: Qual serviço está envolvido?
+      placeholder: "Ex.: S3, IAM, EC2, RDS, Security Groups"
+    validations:
+      required: true
+
+  - type: textarea
+    id: situacao
+    attributes:
+      label: Situação
+      description: O que está mal configurado? Descreva como se fosse um caso real, usando valores de exemplo.
+      placeholder: "Ex.: um bucket S3 com backups tem uma política que permite leitura para qualquer pessoa..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problema
+    attributes:
+      label: Por que é um problema
+      description: Qual o risco? O que poderia acontecer?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: dificuldade
+    attributes:
+      label: Dificuldade (sua estimativa)
+      options:
+        - Iniciante
+        - Intermediário
+        - Avançado
+        - Não sei
+    validations:
+      required: false
+
+  - type: textarea
+    id: correcao
+    attributes:
+      label: Como detectar ou corrigir (opcional)
+      description: Se souber, conte como identificar e resolver. Se não souber, pode deixar em branco.
+    validations:
+      required: false
+
+  - type: input
+    id: fonte
+    attributes:
+      label: Fonte oficial (opcional)
+      description: Link da documentação do provedor, CIS Benchmarks ou equivalente.
+      placeholder: "https://..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: escrever
+    attributes:
+      label: Você quer escrever o cenário completo?
+      description: Se sim, veja o passo a passo no CONTRIBUTING.md. Posso ajudar a revisar.
+      options:
+        - Sim, quero escrever
+        - Não, só estou sugerindo a ideia
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmacoes
+    attributes:
+      label: Confirmações
+      options:
+        - label: Li o CONTRIBUTING.md.
+          required: true
+        - label: Não incluí dados reais, credenciais nem informações que identifiquem empresas ou pessoas.
+          required: true

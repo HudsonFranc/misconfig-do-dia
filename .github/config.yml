@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Como contribuir
+    url: https://github.com/HudsonFranc/misconfig-do-dia/blob/main/CONTRIBUTING.md
+    about: Leia o guia antes de sugerir ou escrever um cenário.
