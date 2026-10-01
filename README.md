@@ -1,70 +1,89 @@
-
-# Astro Starter Kit: Basics
-
-```sh
-npm create astro@latest -- --template basics
-```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-=======
 # 🐛 Misconfig do Dia
 
 Um cenário de má configuração em cloud por dia, em português, para quem está começando em segurança.
 
+<!-- Se houver site publicado, descomente e ajuste a linha abaixo -->
+<!-- 🌐 **Acesse:** https://SEU-SITE-AQUI -->
+
 ## O que é
 
-Todo dia um novo cenário: "esse recurso está seguro? por quê?"
+Todo dia um novo cenário: **"esse recurso está seguro? por quê?"**
 
-Você pensa, tenta responder, e clica para ver a explicação.
+Você lê a situação, tenta responder e depois clica para ver a explicação, como detectar o problema e como corrigir.
 
 ## Por que existe
 
-Aprender segurança cloud é difícil: os materiais são técnicos, em inglês, e assumem que você já sabe muito. Aqui é o oposto: cenários curtos, em português, para iniciantes.
+Aprender segurança cloud é difícil: os materiais costumam ser técnicos, estar em inglês e assumir que você já sabe muito. Aqui é o oposto: cenários curtos, em português, feitos para iniciantes.
+
+## Exemplo de cenário
+
+> **Cenário:** uma equipe criou o bucket S3 `exemplo-bucket` para guardar backups de um sistema interno. Para "facilitar o acesso", alguém adicionou uma política permitindo `s3:GetObject` para qualquer pessoa (`"Principal": "*"`).
+>
+> **Pergunta:** esse bucket está seguro? Por quê?
+
+<details>
+<summary>Ver resposta</summary>
+
+**Não está seguro.** Com `"Principal": "*"`, qualquer pessoa na internet, sem conta AWS e sem autenticação, pode baixar os arquivos do bucket se souber (ou descobrir) o nome dele. Backups costumam conter dados sensíveis, então o risco de vazamento é alto.
+
+**Como detectar:**
+
+```bash
+aws s3api get-bucket-policy-status --bucket exemplo-bucket
+aws s3api get-public-access-block --bucket exemplo-bucket
+```
+
+Se `IsPublic` vier como `true`, ou se o bloqueio de acesso público estiver desativado, o bucket merece atenção. O IAM Access Analyzer também aponta buckets com acesso externo.
+
+**Como corrigir:** remova da política o trecho que libera acesso a todos e ative o bloqueio de acesso público:
+
+```bash
+aws s3api put-public-access-block \
+  --bucket exemplo-bucket \
+  --public-access-block-configuration \
+  BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
+```
+
+Se alguém realmente precisa de acesso, conceda a identidades específicas (usuários ou funções do IAM), e não a todos.
+
+</details>
+
+## Estrutura do projeto
+
+```
+cenarios/   # um arquivo Markdown por cenário
+docs/       # template de cenário e documentação do projeto
+public/     # arquivos estáticos
+src/        # código do site (Astro)
+```
+
+## Rodando localmente
+
+Requisitos: [Node.js](https://nodejs.org/) e npm.
+
+```bash
+git clone https://github.com/HudsonFranc/misconfig-do-dia.git
+cd misconfig-do-dia
+npm install
+npm run dev
+```
+
+O site abre em `http://localhost:4321`.
+
+| Comando | O que faz |
+| --- | --- |
+| `npm run dev` | Inicia o servidor local em `localhost:4321` |
+| `npm run build` | Gera a versão de produção em `./dist/` |
+| `npm run preview` | Pré-visualiza o build localmente |
 
 ## Como contribuir
 
-Veja [CONTRIBUTING.md](CONTRIBUTING.md).
+Contribuições são muito bem-vindas, desde uma ideia de cenário até a revisão técnica de um existente. Veja o guia completo em [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Aviso
+
+Os cenários têm fins educacionais e usam apenas dados de exemplo. Teste comandos somente em contas sandbox suas, nunca em ambientes de produção ou de terceiros.
 
 ## Licença
 
-MIT
->>>>>>> c9beaa25896fc227c7a6c2a848fd36e677a0fb99
+[MIT](LICENSE)
